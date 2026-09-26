@@ -21,7 +21,7 @@ class Manifest{
         std::string GetSectionLabel(int index);
     
     public:
-        // Constructor - initializes an empty manifest with zeroed statistics
+        // Constructor-initializes an empty manifest with zeroed statistics
         Manifest();
     
         // Manifest manipulation methods

@@ -3,26 +3,19 @@
 #include "Passenger.h"
 #include "Manifest.h"
 
-int clear(){
-    using std::cout;
-    for(int i = 0; i < 100; i++){ 
-        cout << "\n";
-    }
-    return 0;
-}
 
 int askMode(){
     using std::cin, std::cout;
     int choice = 0;
-    while((choice <1) or (choice >4)){
+    while((choice <1) or (choice >5)){
     cout << "Choose one of the following: \n";
     cout << "1. create a passenger \n";
     cout << "2. add most recent passenger to manifest \n";
     cout << "3. remove the most recently created passenger from the manifest \n";
     cout << "4. print out manifest \n";
+    cout << "5. quit \n";
     cout << "\n";
     cin >> choice;
-    clear();
     } //end while
     return choice;
 }
@@ -35,7 +28,6 @@ int main(){
 
     while(1){
         int mode = 0;
-        clear();
         mode = askMode();
         switch(mode){
             // Replace cases 1, 2, and 3 with this:
@@ -98,6 +90,10 @@ int main(){
             case 4: {
                 travelManifest.Print();
                 break;
+            }
+            case 5: {
+                cout << "program terminated by user \n";
+                exit(0);
             }
             default:
                 cout << "something went wrong \n";

@@ -14,11 +14,8 @@ Passenger::Passenger(){
 }
 
 
-// IsValidCabinFormat (private helper)
-// Checks every rule for a cabin number in one place, instead of
-// scattering separate single-line checks through SetCabinNumber.
-// Valid format is exactly: one letter from {P, C, S}, a dash,
-// then three digits (e.g. "P-000" through "S-999").
+// IsValidCabinFormat
+// valid format is one letter, a dash, three numbers
 bool Passenger::IsValidCabinFormat(const std::string& Val){
     const size_t EXPECTED_LENGTH = 5;
     const size_t SECTION_INDEX = 0;
@@ -31,10 +28,13 @@ bool Passenger::IsValidCabinFormat(const std::string& Val){
         return false;
     }
 
+    //check character 0 for valid one that matches one from valid sections
+    // makes sure .find doesnt return != std::string::npos which is when it doesn't find
     bool sectionOk = (VALID_SECTIONS.find(Val[SECTION_INDEX]) != std::string::npos);
-    bool dashOk = (Val[DASH_INDEX] == '-');
+    bool dashOk = (Val[DASH_INDEX] == '-'); // check if there's a dash at the dash index
     bool digitsOk = true;
 
+    //check each character to make sure it's a digit
     for (size_t i = DIGITS_START; i < DIGITS_START + DIGITS_COUNT; i++){
         if (!std::isdigit(static_cast<unsigned char>(Val[i]))){
             digitsOk = false;
@@ -42,6 +42,7 @@ bool Passenger::IsValidCabinFormat(const std::string& Val){
         }
     }
 
+    // all the tests passed, return 0, otherwise it's got error
     return sectionOk && dashOk && digitsOk;
 }
 
@@ -74,13 +75,12 @@ int Passenger::SetCabinNumber(std::string Val){
     if (!IsValidCabinFormat(Val)){
         return 1; // error: does not match required x-nnn format
     }
-    
+
     cabinNumber = Val;
     return 0; // success
 }
 
 // GetInfo
-// Composite read accessor - fills in all three fields at once.
 void Passenger::GetInfo(std::string& FirstName, std::string& LastName, std::string& CabinNumber){
     FirstName = firstName;
     LastName = lastName;
